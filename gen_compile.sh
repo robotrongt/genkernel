@@ -312,13 +312,13 @@ compile_kernel() {
 
 	local ext_fw_build="yes"
 
-	local fw_makefile='fgrep firmware_install "${BUILD_SRC}"/Makefile'
+	local fw_makefile=$(fgrep firmware_install "${BUILD_SRC}"/Makefile)
 	if [ -z "${fw_makefile}" ]
 	then
 		print_info 1 "        >> Disabling firmware build due to firmware_install target not being available..."
 		ext_fw_build="no"
 	else
-		local firmware_in_kernel_line=`fgrep CONFIG_FIRMWARE_IN_KERNEL "${BUILD_DST}"/.config`
+		local firmware_in_kernel_line=$(fgrep CONFIG_FIRMWARE_IN_KERNEL "${BUILD_DST}"/.config)
 		if [ -n "${firmware_in_kernel_line}" -a "${firmware_in_kernel_line}" == CONFIG_FIRMWARE_IN_KERNEL=y ]
 		then
 			ext_fw_build="no"
@@ -331,10 +331,6 @@ compile_kernel() {
 			print_info 1 "        >> Installing firmware ('make firmware_install')..."
 			compile_generic "firmware_install" kernel
 	fi
-
-	# workaround for bug #244651 fix not being very good for RHEL:
-	print_info 1 "        >> Installing firmware ('make firmware_install')..."
-	compile_generic "firmware_install" kernel
 
 	local tmp_kernel_binary=$(find_kernel_binary ${KERNEL_BINARY})
 	local tmp_kernel_binary2=$(find_kernel_binary ${KERNEL_BINARY_2})
