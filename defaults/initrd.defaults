@@ -50,6 +50,7 @@ KMINOR=`echo $KV | cut -f2 -d.`
 KVER="${KMAJOR}.${KMINOR}"
 MISCOPTS='debug detect'
 
+<<<<<<< HEAD
 if [ "${KMAJOR}" -eq 2 -a "${KMINOR}" -ge '6' ] || [ "${KMAJOR}" -gt 2 ]
 then
 	KV_2_6_OR_GREATER="yes"
